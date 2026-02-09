@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PassDrop - Pass Gen</string>
+    <string name="title">🔐 PassDrop</string>
+    <string name="password_length">Password Length (5–300)</string>
+    <string name="uppercase">Uppercase (A–Z)</string>
+    <string name="lowercase">Lowercase (a–z)</string>
+    <string name="numbers">Numbers (0–9)</string>
+    <string name="special_chars">Special Characters</string>
+    <string name="customize_special_count">Customize… (%1$d)</string>
+    <string name="non_ascii">Non-ASCII (100+ Languages)</string>
+    <string name="auto_clear_clipboard">Auto-clear clipboard after 60s</string>
+    <string name="select_all">Select All</string>
+    <string name="deselect_all">Deselect All</string>
+    <string name="selected_chars">Selected: %1$d/%2$d</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_ok">OK</string>
+    <string name="generate_button">GENERATE PASSWORD</string>
+    <string name="generated_password">Generated Password:</string>
+    <string name="copy_button">📋 Copy</string>
+    <string name="copy_button_countdown">📋 Copy (%1$ds)</string>
+    <string name="length_chars">Length: %1$d characters</string>
+    <string name="entropy_bits">Entropy: %1$d bits</string>
+    <string name="strength_label">Strength</string>
+    <string name="clipboard_will_clear">⏰ Clipboard will clear in %1$ds</string>
+    <string name="auto_clear_note">💡 Password will be cleared after copying</string>
+    <string name="copied_message">Copied!</string>
+    <string name="error_generic">Error</string>
+</resources>
