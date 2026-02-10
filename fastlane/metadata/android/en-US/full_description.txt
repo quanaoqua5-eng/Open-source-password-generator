@@ -1,0 +1,10 @@
+PassDrop is a fully offline, open-source password and passphrase generator.
+
+Features:
+• Cryptographically secure random generator
+• Password & passphrase modes
+• Entropy calculation
+• Clipboard auto-clear
+• No tracking, no ads, no internet permission
+
+Built with security-first principles.
