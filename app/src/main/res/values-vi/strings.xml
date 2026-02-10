@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PassDrop - Pass Gen</string>
+    <string name="title">🔐 PassDrop</string>
+    <string name="password_mode">Mật khẩu</string>
+    <string name="passphrase_mode">Cụm từ</string>
+    <string name="password_length">Độ Dài Mật Khẩu (5–300)</string>
+    <string name="passphrase_words">Số từ (3–10)</string>
+    <string name="uppercase">Chữ hoa (A–Z)</string>
+    <string name="lowercase">Chữ thường (a–z)</string>
+    <string name="numbers">Số (0–9)</string>
+    <string name="special_chars">Ký tự đặc biệt</string>
+    <string name="customize_special_count">Tùy chỉnh… (%1$d)</string>
+    <string name="non_ascii">Ký tự Non-ASCII (100+ Ngôn ngữ)</string>
+    <string name="auto_clear_clipboard">Tự động xóa clipboard sau 60 giây</string>
+    <string name="hide_by_default">Ẩn mặc định (nhấn giữ để hiện)</string>
+    <string name="select_all">Chọn tất cả</string>
+    <string name="deselect_all">Bỏ chọn tất cả</string>
+    <string name="selected_chars">Đã chọn: %1$d/%2$d</string>
+    <string name="dialog_cancel">Hủy</string>
+    <string name="dialog_ok">OK</string>
+    <string name="generate_button">TẠO</string>
+    <string name="generated_result">Đã tạo:</string>
+    <string name="copy_button">📋 Copy</string>
+    <string name="copy_button_countdown">📋 Copy (%1$ds)</string>
+    <string name="length_chars">Độ dài: %1$d ký tự</string>
+    <string name="word_count">%1$d từ</string>
+    <string name="entropy_bits">Độ mạnh: %1$d bits</string>
+    <string name="strength_label">Mức độ</string>
+    <string name="clipboard_will_clear">⏰ Clipboard sẽ xóa sau %1$ds</string>
+    <string name="auto_clear_note">💡 Sẽ tự xóa sau khi copy</string>
+    <string name="copied_message">Đã copy!</string>
+    <string name="error_generic">Lỗi</string>
+    <string name="hidden_text">••••••••••••</string>
+    <string name="long_press_to_show">Nhấn giữ để hiện</string>
+</resources>

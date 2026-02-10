@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.8"
+        android:scaleY="0.8"
+        android:translateX="10.8"
+        android:translateY="10.8">
+        
+        <!-- Lock body -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M64,45v-7c0,-6.6 -5.4,-12 -12,-12h-4c-6.6,0 -12,5.4 -12,12v7h-4v32h36V45h-4z M44,38c0,-4.4 3.6,-8 8,-8h4c4.4,0 8,3.6 8,8v7H44V38z" />
+        
+        <!-- Drop shape inside lock -->
+        <path
+            android:fillColor="#2962FF"
+            android:pathData="M52,55c-3.3,0 -6,2.7 -6,6c0,2.2 1.2,4.2 3,5.3V71c0,1.7 1.3,3 3,3s3,-1.3 3,-3v-4.7c1.8,-1.1 3,-3.1 3,-5.3C58,57.7 55.3,55 52,55z" />
+    </group>
+</vector>
