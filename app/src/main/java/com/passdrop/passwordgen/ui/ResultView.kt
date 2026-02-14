@@ -29,6 +29,22 @@ fun ResultView(viewModel: PasswordViewModel) {
     var isLongPressing by remember { mutableStateOf(false) }
     val showText = viewModel.isPasswordVisible || isLongPressing
     
+    val hiddenText = stringResource(R.string.hidden_text)
+    
+    val displayString by remember(viewModel.generatedText, showText) {
+        derivedStateOf {
+            if (viewModel.generatedText.isEmpty()) ""
+            else if (showText) String(viewModel.generatedText)
+            else hiddenText
+        }
+    }
+    
+    DisposableEffect(viewModel.generatedText) {
+        onDispose {
+            // String will be garbage collected when composable is disposed
+        }
+    }
+    
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFE3F2FD)),
@@ -55,7 +71,7 @@ fun ResultView(viewModel: PasswordViewModel) {
                             context.getString(R.string.copied_message),
                             Toast.LENGTH_SHORT
                         ).show()
-                        viewModel.startClipboardCountdown()
+                        viewModel.startClipboardCountdown(context)
                     }
                 ) {
                     Text(
@@ -82,10 +98,7 @@ fun ResultView(viewModel: PasswordViewModel) {
                     .padding(vertical = 8.dp)
             ) {
                 Text(
-                    text = if (showText) 
-                        viewModel.generatedText 
-                    else 
-                        stringResource(R.string.hidden_text),
+                    text = displayString,
                     fontSize = 14.sp,
                     color = Color.Black,
                     lineHeight = 20.sp
@@ -111,7 +124,7 @@ fun ResultView(viewModel: PasswordViewModel) {
                 Text(
                     text = stringResource(
                         R.string.length_chars,
-                        viewModel.generatedText.length
+                        viewModel.generatedText.size
                     ),
                     fontSize = 12.sp,
                     color = Color.Gray
@@ -205,8 +218,18 @@ private fun StrengthIndicator(entropy: PasswordEntropy) {
     )
 }
 
-private fun copyToClipboard(context: Context, text: String) {
+private fun copyToClipboard(context: Context, password: CharArray) {
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    val clip = ClipData.newPlainText("password", text)
+    
+    // Create String in minimal scope - no intermediate variable
+    val clip = ClipData.newPlainText("password", String(password))
+    
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+        clip.description.extras = android.os.PersistableBundle().apply {
+            putBoolean(android.content.ClipDescription.EXTRA_IS_SENSITIVE, true)
+        }
+    }
+    
     clipboard.setPrimaryClip(clip)
+    // String(password) goes out of scope here → eligible for GC
 }

@@ -144,12 +144,28 @@ private fun CharacterTypesSection(viewModel: PasswordViewModel) {
                 onCheckedChange = { viewModel.includeNonAscii = it }
             )
             
+            if (viewModel.includeNonAscii) {
+                Text(
+                    text = "⚠️ " + stringResource(R.string.non_ascii_warning),
+                    fontSize = 11.sp,
+                    color = Color(0xFFFF6F00),
+                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                    modifier = Modifier.padding(start = 40.dp, top = 4.dp, bottom = 8.dp)
+                )
+            }
+            
             Divider(modifier = Modifier.padding(vertical = 8.dp), color = Color.LightGray)
             
             CheckboxRow(
                 text = stringResource(R.string.auto_clear_clipboard),
                 checked = viewModel.autoClearClipboard,
                 onCheckedChange = { viewModel.autoClearClipboard = it }
+            )
+            
+            CheckboxRow(
+                text = stringResource(R.string.hide_by_default),
+                checked = !viewModel.isPasswordVisible,
+                onCheckedChange = { viewModel.isPasswordVisible = !it }
             )
         }
     }

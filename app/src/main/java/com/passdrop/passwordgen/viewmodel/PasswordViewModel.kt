@@ -1,13 +1,21 @@
 package com.passdrop.passwordgen.viewmodel
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.passdrop.passwordgen.domain.*
 import com.passdrop.passwordgen.util.EntropyCalculator
+import com.passdrop.passwordgen.worker.ClipboardClearWorker
+import java.util.concurrent.TimeUnit
 
 class PasswordViewModel : ViewModel() {
     
@@ -27,8 +35,10 @@ class PasswordViewModel : ViewModel() {
     var selectedSpecialChars by mutableStateOf(allSpecialChars.toSet())
     
     var passphraseWordCount by mutableIntStateOf(4)
+    var selectedSeparator by mutableStateOf(PassphraseSeparator.DASH)
+    var selectedLanguage by mutableStateOf(PassphraseLanguage.ENGLISH)
     
-    var generatedText by mutableStateOf("")
+    var generatedText by mutableStateOf(CharArray(0))
         private set
     
     var passwordEntropy by mutableStateOf<PasswordEntropy?>(null)
@@ -84,9 +94,11 @@ class PasswordViewModel : ViewModel() {
             includeNonAscii = includeNonAscii
         )
         
+        generatedText.fill('0')
+        
         val result = PasswordGenerator.generate(config)
         generatedText = result.password
-        passwordEntropy = EntropyCalculator.calculate(result.password)
+        passwordEntropy = EntropyCalculator.calculate(len, result.poolSize)
         passwordStats = result.stats
         
         isClipboardActive = false
@@ -97,9 +109,13 @@ class PasswordViewModel : ViewModel() {
     private fun generatePassphrase() {
         require(passphraseWordCount in 3..10) { "Word count must be between 3 and 10" }
         
-        val result = PassphraseGenerator.generate(passphraseWordCount)
+        generatedText.fill('0')
+        
+        val result = PassphraseGenerator.generate(passphraseWordCount, selectedSeparator, selectedLanguage)
         generatedText = result.passphrase
-        passwordEntropy = EntropyCalculator.calculate(result.passphrase)
+        
+        val wordListSize = PassphraseGenerator.getWordListSize(selectedLanguage)
+        passwordEntropy = EntropyCalculator.calculate(passphraseWordCount, wordListSize)
         passwordStats = null
         
         isClipboardActive = false
@@ -107,14 +123,24 @@ class PasswordViewModel : ViewModel() {
         isPasswordVisible = false
     }
     
-    fun startClipboardCountdown() {
+    fun startClipboardCountdown(context: Context) {
         if (autoClearClipboard && !isClipboardActive) {
             clipboardCountdown = 60
             isClipboardActive = true
+            
+            val clearRequest = OneTimeWorkRequestBuilder<ClipboardClearWorker>()
+                .setInitialDelay(60, TimeUnit.SECONDS)
+                .build()
+            
+            WorkManager.getInstance(context).enqueueUniqueWork(
+                "clear_clipboard",
+                ExistingWorkPolicy.REPLACE,
+                clearRequest
+            )
         }
     }
     
-    fun tickCountdown() {
+    fun tickCountdown(context: Context) {
         if (clipboardCountdown > 0) {
             clipboardCountdown--
         } else if (isClipboardActive) {
@@ -122,8 +148,12 @@ class PasswordViewModel : ViewModel() {
         }
     }
     
-    fun clearText() {
-        generatedText = ""
+    fun clearText(context: Context) {
+        generatedText.fill('0')
+        generatedText = CharArray(0)
+        
+        WorkManager.getInstance(context).cancelUniqueWork("clear_clipboard")
+        
         passwordEntropy = null
         passwordStats = null
         isPasswordVisible = false
