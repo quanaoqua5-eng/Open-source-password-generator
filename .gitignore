@@ -1,0 +1,18 @@
+*.iml
+.gradle
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Gradle wrapper jar can be auto-downloaded
+# gradle/wrapper/gradle-wrapper.jar
+
+# Keep wrapper properties and scripts
+!gradle/wrapper/gradle-wrapper.properties
+!gradlew
+!gradlew.bat
