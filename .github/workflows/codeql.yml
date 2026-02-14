@@ -31,11 +31,15 @@ jobs:
       with:
         languages: java-kotlin
 
-    - name: Grant gradlew permission
-      run: chmod +x gradlew
+  - name: Grant gradlew permission
+  run: |
+      cd password-generator
+      chmod +x gradlew
 
-    - name: Build Android app
-      run: ./gradlew assembleDebug --no-daemon
+- name: Build Android app
+  run: |
+      cd password-generator
+      ./gradlew assembleDebug --no-daemon
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
