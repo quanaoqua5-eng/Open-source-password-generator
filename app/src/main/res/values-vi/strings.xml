@@ -33,4 +33,7 @@
     <string name="error_generic">Lỗi</string>
     <string name="hidden_text">••••••••••••</string>
     <string name="long_press_to_show">Nhấn giữ để hiện</string>
+    <string name="non_ascii_warning">Có thể không tương thích với một số hệ thống cũ</string>
+    <string name="separator_label">Ký tự ngăn cách</string>
+    <string name="language_label">Ngôn ngữ</string>
 </resources>

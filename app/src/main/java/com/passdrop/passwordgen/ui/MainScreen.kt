@@ -52,7 +52,7 @@ private fun MainScreenContent(
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_PAUSE || event == Lifecycle.Event.ON_STOP) {
-                viewModel.clearText()
+                viewModel.clearText(context)
                 try {
                     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
                     clipboard?.clearPrimaryClip()
@@ -64,20 +64,14 @@ private fun MainScreenContent(
         
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
-            viewModel.clearText()
+            viewModel.clearText(context)
         }
     }
     
     LaunchedEffect(viewModel.isClipboardActive, viewModel.clipboardCountdown) {
         if (viewModel.isClipboardActive && viewModel.clipboardCountdown > 0) {
             kotlinx.coroutines.delay(1000L)
-            viewModel.tickCountdown()
-        } else if (viewModel.isClipboardActive && viewModel.clipboardCountdown == 0) {
-            try {
-                val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-                clipboard?.clearPrimaryClip()
-            } catch (e: Exception) {}
-            viewModel.isClipboardActive = false
+            viewModel.tickCountdown(context)
         }
     }
     

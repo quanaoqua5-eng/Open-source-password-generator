@@ -33,4 +33,7 @@
     <string name="error_generic">Error</string>
     <string name="hidden_text">••••••••••••</string>
     <string name="long_press_to_show">Long press to show</string>
+    <string name="non_ascii_warning">May not be compatible with some legacy systems</string>
+    <string name="separator_label">Separator</string>
+    <string name="language_label">Language</string>
 </resources>
